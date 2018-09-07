@@ -1,4 +1,8 @@
 class Bottles
+  class BottleNumber
+    # for next time...
+  end
+
   def song
     verses(99, 0)
   end
@@ -8,17 +12,25 @@ class Bottles
   end
 
   def verse(number)
-    case number
-    when 0
-      "No more bottles of beer on the wall, " +
-      "no more bottles of beer.\n" +
-      "Go to the store and buy some more, " +
-      "99 bottles of beer on the wall.\n"
+    "#{quantity(number).capitalize} #{beer_units(number)} of beer on the wall, " +
+    "#{quantity(number)} #{beer_units(number)} of beer.\n" +
+    action(number) +
+    "#{quantity(successor(number))} #{beer_units(successor(number))} of beer on the wall.\n"
+  end
+
+  def successor(number)
+    if number == 0
+      99
     else
-      "#{number} #{beer_units(number)} of beer on the wall, " +
-      "#{number} #{beer_units(number)} of beer.\n" +
-      "Take #{pronoun(number)} down and pass it around, " +
-      "#{quantity(number-1)} #{beer_units(number-1)} of beer on the wall.\n"
+      number-1
+    end
+  end
+
+  def action(number)
+    if number == 0
+      "Go to the store and buy some more, "
+    else
+      "Take #{pronoun(number)} down and pass it around, "
     end
   end
 
@@ -26,7 +38,7 @@ class Bottles
     if number == 0
       "no more"
     else
-      number
+      number.to_s
     end
   end
 
