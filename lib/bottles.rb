@@ -1,8 +1,52 @@
-class Bottles
-  class BottleNumber
-    # for next time...
+class BottleNumber
+  attr_reader :number
+
+  def initialize(number)
+    @number = number
   end
 
+  def successor
+    if number == 0
+      return BottleNumber.new(99)
+    else
+      return BottleNumber.new(number-1)
+    end
+  end
+
+  def action
+    if number == 0
+      "Go to the store and buy some more, "
+    else
+      "Take #{pronoun} down and pass it around, "
+    end
+  end
+
+  def quantity
+    if number == 0
+      "no more"
+    else
+      number.to_s
+    end
+  end
+
+  def pronoun
+    if number == 1
+      "it"
+    else
+      "one"
+    end
+  end
+
+  def beer_units
+    if number == 1
+      "bottle"
+    else
+      "bottles"
+    end
+  end
+end
+
+class Bottles
   def song
     verses(99, 0)
   end
@@ -12,50 +56,12 @@ class Bottles
   end
 
   def verse(number)
-    "#{quantity(number).capitalize} #{beer_units(number)} of beer on the wall, " +
-    "#{quantity(number)} #{beer_units(number)} of beer.\n" +
-    action(number) +
-    "#{quantity(successor(number))} #{beer_units(successor(number))} of beer on the wall.\n"
-  end
+    bottle_number = BottleNumber.new(number)
+    next_bottle_number = bottle_number.successor
 
-  def successor(number)
-    if number == 0
-      99
-    else
-      number-1
-    end
+    "#{bottle_number.quantity.capitalize} #{bottle_number.beer_units} of beer on the wall, " +
+    "#{bottle_number.quantity} #{bottle_number.beer_units} of beer.\n" +
+    bottle_number.action +
+    "#{next_bottle_number.quantity} #{next_bottle_number.beer_units} of beer on the wall.\n"
   end
-
-  def action(number)
-    if number == 0
-      "Go to the store and buy some more, "
-    else
-      "Take #{pronoun(number)} down and pass it around, "
-    end
-  end
-
-  def quantity(number)
-    if number == 0
-      "no more"
-    else
-      number.to_s
-    end
-  end
-
-  def pronoun(number)
-    if number == 1
-      "it"
-    else
-      "one"
-    end
-  end
-
-  def beer_units(number)
-    if number == 1
-      "bottle"
-    else
-      "bottles"
-    end
-  end
-
 end
